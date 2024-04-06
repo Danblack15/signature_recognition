@@ -5,7 +5,7 @@ import 'dotenv/config';
 import cookieParser from 'cookie-parser'
 
 // Routes
-// import { authRouter } from './routes/auth';
+import { signaturesRouter } from './routes/signatures';
 
 // Global Var
 const PORT = process.env.PORT || 5000;
@@ -26,7 +26,7 @@ app.get('/', async (req, res) => {
     res.send('Index End-Point');
 });
 
-// app.use('/auth', authRouter);
+app.use('/signature', signaturesRouter);
 
 app.listen(PORT, () => {
     console.log('Server is started!');
