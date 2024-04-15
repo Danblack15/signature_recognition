@@ -1,5 +1,7 @@
 import { createStore } from 'vuex'
 
+import { Signatures } from './modules/signatures.js'
+
 export default createStore({
   state: {
   },
@@ -10,5 +12,6 @@ export default createStore({
   actions: {
   },
   modules: {
+    signatures: Signatures
   }
 })

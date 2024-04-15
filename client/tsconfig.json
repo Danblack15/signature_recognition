@@ -4,6 +4,8 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
+    "checkJs": false,
+    "allowJs": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -33,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/store/index.js", "src/store/modules/signatures.js"  ],
   "exclude": [
     "node_modules"
   ]
