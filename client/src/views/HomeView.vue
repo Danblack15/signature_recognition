@@ -1,6 +1,6 @@
 <template>
-	<div class="home">
-		<div>{{ getCoord }}</div>
+	<div class="home page">
+		<h1>{{ headingStep[step - 1] }}</h1>
 		<canvas 
 			ref="canvasElem" 
 			id="c1"
@@ -11,23 +11,22 @@
 			height="400" 
 			class="canvas"
 		></canvas>
-		<button class="clear" @click="clearCanvas">Clear</button>
+		<button class="clear" @click="clearCanvas">Очистить</button>
 		<canvas 
 			ref="canvasDobule" 
-			class="canvas" 
+			class="canvas canvas--disabled" 
 			id="c2"
 			width="500" 
 			height="400"
 		></canvas>
-		<button @click="save(mainData, 'original')" class="save">Сохранить оригинал</button>
-		<button @click="save(mainData, 'copy')" class="save">Сохранить копию</button>
-		<button @click="check" class="save">Сверка</button>
+		<button @click="save(mainData, 'original')" class="save" v-if="pointsArr.length">Сохранить</button>
 	</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import { mapActions } from 'vuex';
 
 export default {
 	name: 'HomeView',
@@ -42,7 +41,10 @@ export default {
 			isDrawing: false,
 			pointsArr: [],
 			summ: 0,
-			mainData: null
+			mainData: null,
+			allSignatures: [],
+			step: 1,
+			headingStep: ['Нарисуйте фигуру/подпись', 'Повторите фигуру/подпись', 'Ещё раз повторите фигуру/подпись']
 		}
 	},
 	mounted() {
@@ -54,7 +56,7 @@ export default {
 			let ctx = this.canvas;
 			ctx.beginPath();
 			ctx.strokeStyle = 'black';
-			ctx.lineWidth = 1;
+			ctx.lineWidth = 5;
 			ctx.moveTo(x1, y1);
 			ctx.lineTo(x2, y2);
 			ctx.stroke();
@@ -104,7 +106,7 @@ export default {
 			
 			ctx.beginPath();
 			ctx.strokeStyle = 'black';
-			ctx.lineWidth = 1;
+			ctx.lineWidth = 5;
 
 			let tempData = []
 
@@ -133,7 +135,17 @@ export default {
 			ctx.stroke();
 			ctx.closePath();
 		},
-		save(data, nameLocal) {
+		save(data, nameLocal) {			
+			this.allSignatures.push(this.mainData);
+
+			if (this.step == 3) {
+				this.addSignatures(this.allSignatures);
+				return;
+			}
+
+			this.step++;
+			this.clearCanvas();
+
 			localStorage.setItem(nameLocal, JSON.stringify(data));
 		},
 		check() {
@@ -171,7 +183,10 @@ export default {
 				console.log('Доступ разрешён..');
 			else
 				console.log('Доступ запрещён!');
-		}
+		},
+		...mapActions({
+			addSignatures: 'signatures/addSignatures'
+		})
 	},
 	computed: {
 		getCoord() {
@@ -182,10 +197,20 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+h1
+	margin-bottom: 20px
+
 .canvas
 	background: rgba(grey, .2)
+	margin-bottom: 20px
+	border-radius: 8px
+	&--disabled
+		display: none
 
 .clear, .save
 	display: block
 	margin: 0 auto
+
+.save
+	margin-top: 15px
 </style>

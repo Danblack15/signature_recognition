@@ -1,0 +1,29 @@
+button
+    font-size: 16px
+    padding: 8px 12px
+    border-radius: 8px
+    font-weight: 600
+    background: $black
+    border: 1px solid $black
+    color: $white
+    line-height: 1.5
+    cursor: pointer
+    transition: $trs
+
+    &.icon
+        background: none
+        display: flex
+        justify-content: center
+        align-items: center
+        border: 1px solid rgba($black, .2)
+        padding: 12px
+        border-radius: 10px
+        &:hover
+            opacity: .5
+        & img
+            width: 20px
+            height: 20px
+
+    &:hover
+        background: transparent
+        color: $black
