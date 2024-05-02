@@ -30,7 +30,7 @@ export const Signatures = {
                 window.location = '/checkSignatures'
             } catch (error) {
                 console.log(error);
-                commit('setHint', [error.response.data.message, false], { root: true });
+                commit('setHint', ['Ошибка авторизации', false], { root: true });
             }
         },
         async addSignatures({ commit }, allSignatures) {

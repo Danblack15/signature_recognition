@@ -44,8 +44,8 @@ export const compareSignatures = async (signature, userName) => {
         const avrDest = checkData.summ / checkData.length
 		console.log('Среднее расстояние = ', avrDest);
 
-        if (avrDest <= 50 && deffLength <= 50)
-			countDecision++        
+        if (avrDest <= 70 && deffLength <= 50)
+			countDecision++
     }
 
     return countDecision >= 2
